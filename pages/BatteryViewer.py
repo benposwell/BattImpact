@@ -116,9 +116,11 @@ with tab1:
     st.dataframe(battery_values.to_frame().T)
 with tab2:
     elements = [col.split('_')[0] for col in data.columns if col.endswith('_formula_discharge')]
-    selected_element = st.selectbox("Select an element", elements)
+    # selected_element = st.selectbox("Select an element", elements)
+    
+    selected_elements = st.multiselect("Select elements to compare", elements)
 
-    element_data = data[data[f'{selected_element}_formula_discharge'] > 0]
+    element_data = data[data[[f'{element}_formula_discharge' for element in selected_elements]].gt(0).all(axis=1)]
 
     feature_subset = st.selectbox("Select a feature subset", list(feature_dictionary.keys()), key="element_subset")
     selected_features = feature_dictionary[feature_subset]
@@ -144,6 +146,7 @@ with tab2:
             y=data[feature],
             name=f"All - {feature}",
             boxpoints=False,
+            showlegend=False,
             marker_color='lightblue',
             line_color='darkblue'
         ))
@@ -152,20 +155,39 @@ with tab2:
         fig.add_trace(go.Box(
             x0=feature,
             y=element_data[feature],
-            name=f"{selected_element} - {feature}",
+            name=f"{selected_elements} - {feature}",
             boxpoints=False,
+            showlegend=False,
             marker_color='lightgreen',
             line_color='darkgreen'
         ))
 
     fig.update_layout(
-        title=f"{feature_subset} Features for {selected_element}-containing Batteries vs All Batteries",
+        title=f"{feature_subset} Features for {selected_elements}-containing Batteries vs All Batteries",
         xaxis_title="Features",
         yaxis_title="Values",
         showlegend=False,
         height=600,
         width=800
     )
+
+    # Add legend to denote color meanings
+    fig.add_trace(go.Scatter(
+        x=[None],
+        y=[None],
+        mode='markers',
+        marker=dict(size=10, color='darkblue'),
+        name='All Batteries'
+    ))
+    fig.add_trace(go.Scatter(
+        x=[None],
+        y=[None],
+        mode='markers',
+        marker=dict(size=10, color='darkgreen'),
+        name=f'{selected_elements}-containing Batteries'
+    ))
+
+    fig.update_layout(showlegend=True)
 
     st.plotly_chart(fig)
 
@@ -175,12 +197,12 @@ with tab2:
         st.write("All Batteries Statistics:")
         st.dataframe(all_stats)
     with col2:
-        st.write(f"{selected_element}-containing Batteries Statistics:")
+        st.write(f"{selected_elements}-containing Batteries Statistics:")
         st.dataframe(element_stats)
 
     # Display number of batteries in each group
     st.write(f"Number of all batteries: {len(data)}")
-    st.write(f"Number of {selected_element}-containing batteries: {len(element_data)}")
+    st.write(f"Number of {selected_elements}-containing batteries: {len(element_data)}")
 
 
 
