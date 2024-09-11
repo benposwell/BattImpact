@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from PIL import Image
 from supabase import create_client, Client
 
 feature_dictionary = {
@@ -283,61 +280,5 @@ with tab2:
     else:    
         result = filtered_results[0]  # Assume one result per combination
         display_model_details(supabase, result, model_type)
-    
-
-# Sidebar for user inputs
-# st.sidebar.header("Model Selection")
-# model_type = st.sidebar.radio("Select model type:", ["Linear Regression", "XGBoost"])
-
-# st.sidebar.header("Feature Selection")
-# selected_features = st.sidebar.multiselect(
-#     "Select feature subsets:",
-#     options=list(feature_dictionary.keys()),
-#     default=list(feature_dictionary.keys())[0]
-# )
-
-# response_var_options = []
-# if model_type == "Linear Regression":
-#     with st.spinner("Fetching response variables..."):
-#         try:
-#             if st.session_state.regression_table is None:
-#                 st.session_state.regression_table = get_data('regression_models')
-#             # response_vars = get_data('regression_models')
-#             response_vars = st.session_state.regression_table
-#             response_var_options = [r['response_variable'] for r in response_vars if set(r['feature_subset']) == set(selected_features)]
-#         except Exception as e:
-#             st.error(f"Error fetching response variables for Linear Regression: {e}")
-        
-# else:
-#     with st.spinner("Fetching response variables..."):
-#         try:
-#             if st.session_state.xgboost_table is None:
-#                 st.session_state.xgboost_table = get_data('xgboost_models')
-#             response_vars = st.session_state.xgboost_table
-#             # response_vars = get_data('xgboost_models')
-#             response_var_options = [r['response_variable'] for r in response_vars if set(r['feature_subset']) == set(selected_features)]
-#         except Exception as e:
-#             st.error(f"Error fetching response variables for XGBoost: {e}")
-# if not response_var_options:
-#     response_var_options = ["No available targets for selected features"]
-
-# response_var = st.sidebar.selectbox("Select target variable:", response_var_options, key="target_select")
-
-# Fetch results from database
-# if model_type == "Linear Regression":
-#     results = st.session_state.regression_table
-#     # results = get_data('regression_models')
-#     filtered_results = [r for r in results if set(r['feature_subset']) == set(selected_features) and r['response_variable'] == response_var]
-# else:  # XGBoost
-#     results = st.session_state.xgboost_table
-#     # results = get_data('xgboost_models')
-#     filtered_results = [r for r in results if set(r['feature_subset']) == set(selected_features) and r['response_variable'] == response_var]
-
-# if not filtered_results:
-#     st.warning(f"No results found for the selected combination of features and target variable for {model_type}.")
-# else:    
-#     result = filtered_results[0]  # Assume one result per combination
-
-# Display results
     
 
