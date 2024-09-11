@@ -1,0 +1,9 @@
+method,trustworthiness,continuity,kl_divergence
+Structural Encoding,0.9950049526121616,0.9928492560025614,-729539985.6613712
+Battery Properties,0.9998060478021944,0.9994211672203952,-557466989.0989307
+Environmental Impact Features,0.9995384143020616,0.999061231543877,-346087755.88123393
+Socioeconomic Impact Features,0.9993754193073775,0.9954387296141435,-587260982.4375439
+"('Battery Properties', 'Environmental Impact Features')",0.9993567527124233,0.9972665533647441,-634104435.6767719
+"('Battery Properties', 'Socioeconomic Impact Features')",0.9991635320489558,0.9968318702577299,-756511692.2902477
+"('Environmental Impact Features', 'Socioeconomic Impact Features')",0.9994645646637076,0.9970194256865231,-719729344.7002177
+"('Battery Properties', 'Environmental Impact Features', 'Socioeconomic Impact Features')",0.9982395231293908,0.9953135852867828,-632794540.4717485
