@@ -51,7 +51,7 @@ st.write("This page allows you to understand the multidimensional impact of a sp
 
 @st.cache_data
 def get_dataset():
-    df = pd.read_csv('/Users/bposwell/Desktop/Projects/Honours/Data/mp_total_encoded_normal.csv')
+    df = pd.read_csv('data/mp_total_encoded_normal.csv')
     df = df[df['energy_grav'] >= 0]
 
     working_ion_encoded = pd.get_dummies(df['working_ion'], prefix='working_ion')
